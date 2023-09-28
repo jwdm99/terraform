@@ -129,4 +129,34 @@ resource "azurerm_windows_virtual_machine" "JWM-VM-1" {
   tags = {
     environment = "dev"
   }
+
+}
+
+#Create Win 11 Desktop VM, attatching NIC1
+resource "azurerm_windows_virtual_machine" "JWM-VM-2" {
+  name                = "JWM-VM-2"
+  resource_group_name = azurerm_resource_group.JWM-Terraform.name
+  location            = azurerm_resource_group.JWM-Terraform.location
+  size                = "Standard_DC2s_v2"
+  admin_username      = "superuser"
+  admin_password      = "Cust0mersf1rst!"
+  network_interface_ids = [
+    azurerm_network_interface.nic1.id,
+  ]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+
+  source_image_reference {
+    publisher = "MicrosoftWindowsDesktop"
+    offer     = "Windows-11"
+    sku       = "win11-22h2-pro"
+    version   = "latest"
+  }
+
+  tags = {
+    environment = "dev"
+  }
 }
