@@ -6,13 +6,13 @@
   hosts: localhost
   connection: local
   vars:
-    vm_name: JWM-VM-1
+    vm_name: vmforimage
   tasks:
 
   - name: Stop and generalize VMs
     azure_rm_virtualmachine:
-      resource_group: "{{ JWM-Terraform }}"
-      name: "{{ JWM-VM-1 }}{{ item }}"
+      resource_group: "{{ resource_group }}"
+      name: "{{ vm_name }}{{ item }}"
       generalized: yes
     loop:
       - A
@@ -20,9 +20,9 @@
 
   - name: Create an images from a VMs
     azure_rm_image:
-      resource_group: "{{ JWM-Terraform }}"
-      name: "image_{{ JWM-VM-1 }}{{ item }}"
-      source: "{{ JWM-VM1 }}{{ item }}"
+      resource_group: "{{ resource_group }}"
+      name: "image_{{ vm_name }}{{ item }}"
+      source: "{{ vm_name }}{{ item }}"
     loop:
       - A
       - B
