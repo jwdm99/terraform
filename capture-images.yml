@@ -1,0 +1,28 @@
+# Description
+# ===========
+# This playbook creates an Azure VM with public IP, and then dumps it using facts
+
+- name: Capture VM Images
+  hosts: localhost
+  connection: local
+  vars:
+    vm_name: JWM-VM-1
+  tasks:
+
+  - name: Stop and generalize VMs
+    azure_rm_virtualmachine:
+      resource_group: "{{ JWM-Terraform }}"
+      name: "{{ JWM-VM-1 }}{{ item }}"
+      generalized: yes
+    loop:
+      - A
+      - B
+
+  - name: Create an images from a VMs
+    azure_rm_image:
+      resource_group: "{{ JWM-Terraform }}"
+      name: "image_{{ JWM-VM-1 }}{{ item }}"
+      source: "{{ JWM-VM1 }}{{ item }}"
+    loop:
+      - A
+      - B
