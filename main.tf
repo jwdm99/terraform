@@ -173,6 +173,7 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
   resource_group_name = azurerm_resource_group.JWM-Terraform.name
   location            = azurerm_resource_group.JWM-Terraform.location
   size                = "Standard_DC2s_v2"
+  computer_name  = "JWM-Ubuntu"
   admin_username      = "superuser"
   network_interface_ids = [
     azurerm_network_interface.nic2.id,
@@ -189,8 +190,6 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
     sku       = "20_04-lts"
     version   = "latest"
   }
-  computer_name  = "JWM-Ubuntu"
-  admin_username = var.username
 
   admin_ssh_key {
     username   = var.username
