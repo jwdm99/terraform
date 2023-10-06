@@ -126,6 +126,7 @@ resource "azurerm_network_interface" "nic2" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.JWM-IP-2.id
   }
+}
 
 #Create Win 11 Desktop VM, attatching NIC1
 resource "azurerm_windows_virtual_machine" "JWM-VM-1" {
