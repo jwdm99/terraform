@@ -158,3 +158,31 @@ resource "azurerm_windows_virtual_machine" "JWM-VM-1" {
 
 }
 
+#Creates Ubuntu Linux VM, Attatch NIC2
+resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
+  name                = "JWM-VM-2"
+  resource_group_name = azurerm_resource_group.JWM-Terraform.name
+  location            = azurerm_resource_group.JWM-Terraform.location
+  size                = "Standard_DC2s_v2"
+  admin_username      = "superuser"
+  network_interface_ids = [
+    azurerm_network_interface.nic2.id,
+  ]
+
+  admin_ssh_key {
+    username   = "adminuser"
+    public_key = file("~/.ssh/id_rsa.pub")
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-lts"
+    version   = "latest"
+  }
+}
