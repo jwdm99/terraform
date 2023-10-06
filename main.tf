@@ -158,6 +158,16 @@ resource "azurerm_windows_virtual_machine" "JWM-VM-1" {
 
 }
 
+# Generate random text for a unique storage account name
+resource "random_id" "random_id" {
+  keepers = {
+    # Generate a new ID only when a new resource group is defined
+    resource_group = azurerm_resource_group.rg.name
+  }
+
+  byte_length = 8
+}
+
 # Create storage account for boot diagnostics
 resource "azurerm_storage_account" "JWM-Storage1" {
   name                     = "diag${random_id.random_id.hex}"
@@ -173,7 +183,7 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
   resource_group_name = azurerm_resource_group.JWM-Terraform.name
   location            = azurerm_resource_group.JWM-Terraform.location
   size                = "Standard_DC2s_v2"
-  computer_name  = "JWM-Ubuntu"
+  computer_name       = "JWM-Ubuntu"
   admin_username      = "superuser"
   network_interface_ids = [
     azurerm_network_interface.nic2.id,
@@ -195,8 +205,8 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
     username   = var.username
     public_key = jsondecode(azapi_resource_action.ssh_public_key_gen.output).publicKey
   }
-  
-    boot_diagnostics {
+
+  boot_diagnostics {
     storage_account_uri = azurerm_storage_account.my_storage_account.primary_blob_endpoint
   }
 }
