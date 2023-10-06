@@ -72,9 +72,21 @@ resource "azurerm_subnet_network_security_group_association" "NSG1-Subnet" {
   network_security_group_id = azurerm_network_security_group.NSG1.id
 }
 
-#Create Public IP
+#Create Public IP for W11 VM
 resource "azurerm_public_ip" "JWM-IP-1" {
   name                = "JWM-IP-1"
+  resource_group_name = azurerm_resource_group.JWM-Terraform.name
+  location            = azurerm_resource_group.JWM-Terraform.location
+  allocation_method   = "Dynamic"
+
+  tags = {
+    environment = "dev"
+  }
+}
+
+#Create Public IP for Linux VM
+resource "azurerm_public_ip" "JWM-IP-2" {
+  name                = "JWM-IP-2"
   resource_group_name = azurerm_resource_group.JWM-Terraform.name
   location            = azurerm_resource_group.JWM-Terraform.location
   allocation_method   = "Dynamic"
@@ -101,6 +113,19 @@ resource "azurerm_network_interface" "nic1" {
     environment = "dev"
   }
 }
+
+#Create NIC 2, attatching public IP
+resource "azurerm_network_interface" "nic2" {
+  name                = "nic2"
+  location            = azurerm_resource_group.JWM-Terraform.location
+  resource_group_name = azurerm_resource_group.JWM-Terraform.name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.JWM-IP-2.id
+  }
 
 #Create Win 11 Desktop VM, attatching NIC1
 resource "azurerm_windows_virtual_machine" "JWM-VM-1" {
@@ -129,4 +154,6 @@ resource "azurerm_windows_virtual_machine" "JWM-VM-1" {
   tags = {
     environment = "dev"
   }
+
 }
+
