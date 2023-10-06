@@ -158,6 +158,15 @@ resource "azurerm_windows_virtual_machine" "JWM-VM-1" {
 
 }
 
+# Create storage account for boot diagnostics
+resource "azurerm_storage_account" "JWM-Storage1" {
+  name                     = "diag${random_id.random_id.hex}"
+  location                 = azurerm_resource_group.rg.location
+  resource_group_name      = azurerm_resource_group.rg.name
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
 #Creates Ubuntu Linux VM, Attatch NIC2
 resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
   name                = "JWM-VM-2"
@@ -169,11 +178,6 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
     azurerm_network_interface.nic2.id,
   ]
 
-  admin_ssh_key {
-    username   = "adminuser"
-    public_key = file("~/.ssh/JWM-Ubuntu.pub")
-  }
-
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
@@ -184,5 +188,16 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
     offer     = "0001-com-ubuntu-server-focal"
     sku       = "20_04-lts"
     version   = "latest"
+  }
+  computer_name  = "JWM-Ubuntu"
+  admin_username = var.username
+
+  admin_ssh_key {
+    username   = var.username
+    public_key = jsondecode(azapi_resource_action.ssh_public_key_gen.output).publicKey
+  }
+  
+    boot_diagnostics {
+    storage_account_uri = azurerm_storage_account.my_storage_account.primary_blob_endpoint
   }
 }
