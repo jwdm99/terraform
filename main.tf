@@ -175,7 +175,7 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
   network_interface_ids = [
     azurerm_network_interface.nic2.id,
   ]
-
+  custom_data = filebase64("customdata.tpl")
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
