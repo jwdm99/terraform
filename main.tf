@@ -33,6 +33,32 @@ resource "azurerm_network_security_group" "NSG1" {
   location            = azurerm_resource_group.JWM-Terraform.location
   resource_group_name = azurerm_resource_group.JWM-Terraform.name
 
+  security_rule {
+    name                       = "SSH"
+    priority                   = 110
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "22"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+
+  }
+
+    security_rule {
+    name                       = "RDP"
+    priority                   = 120
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "3389"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+
+  }
+  
   tags = {
     environment = "dev"
   }
