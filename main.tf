@@ -1,24 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=3.0.0"
-    }
-    azapi = {
-      source  = "azure/azapi"
-      version = "~>1.5"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "~>3.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
-
 #Create Resource Group "JWM-Terraform"
 resource "azurerm_resource_group" "JWM-Terraform" {
   name     = "JWM-Terraform"
