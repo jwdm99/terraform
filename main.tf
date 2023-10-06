@@ -190,7 +190,7 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
   name                = "JWM-VM-2"
   resource_group_name = azurerm_resource_group.JWM-Terraform.name
   location            = azurerm_resource_group.JWM-Terraform.location
-  size                = "Standard_DC2s_v3"
+  size                = "Standard_DC2s_v1"
   computer_name       = "JWM-Ubuntu"
   admin_username      = "superuser"
   network_interface_ids = [
