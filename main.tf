@@ -230,14 +230,9 @@ resource "azurerm_virtual_machine_extension" "JWM-VM-2" {
   type                 = "CustomScript"
   type_handler_version = "2.0"
 
-  settings = <<SETTINGS
- {
-  "commandToExecute": "sh customdata.sh"
- }
-SETTINGS
-
-
-  tags = {
-    environment = "dev"
-  }
+  protected_settings = <<PROT
+    {
+        "script": "${base64encode(file(var.scfile))}"
+    }
+    PROT
 }
