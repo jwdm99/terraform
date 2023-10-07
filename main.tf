@@ -201,8 +201,6 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
     azurerm_network_interface.nic2.id,
   ]
 
-  custom_data = filebase64("customdata.sh")
-
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
@@ -222,5 +220,24 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
 
   boot_diagnostics {
     storage_account_uri = azurerm_storage_account.JWM-Storage1.primary_blob_endpoint
+  }
+}
+
+resource "azurerm_virtual_machine_extension" "JWM-VM-2" {
+  name                 = "JWM-VM-2"
+  virtual_machine_id   = azurerm_linux_virtual_machine.JWM-VM-2.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  settings = <<SETTINGS
+ {
+  "commandToExecute": "sh customdata.sh"
+ }
+SETTINGS
+
+
+  tags = {
+    environment = "dev"
   }
 }
