@@ -200,8 +200,8 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
   network_interface_ids = [
     azurerm_network_interface.nic2.id,
   ]
-  
-  custom_data = filebase64("customdata.tpl")
+
+  custom_data = filebase64("customdata.sh")
 
   os_disk {
     caching              = "ReadWrite"
