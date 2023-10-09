@@ -229,7 +229,8 @@ resource "azurerm_virtual_machine_extension" "JWM-VM-2" {
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
   type_handler_version = "2.1"
-
+  automatic_upgrade_enabled = true
+  
   settings = <<SETTINGS
     {
     "fileUris": ["https://github.com/jwdm99/terraform.git/customdata.sh"],
