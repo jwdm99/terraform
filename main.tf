@@ -227,7 +227,7 @@ resource "azurerm_virtual_machine_extension" "JWM-VM-2" {
   name                 = "hostname"
   virtual_machine_id   = azurerm_linux_virtual_machine.JWM-VM-2.id
   publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScriptExtension"
+  type                 = "CustomScript"
   type_handler_version = "2.1"
 
   settings = <<SETTINGS
