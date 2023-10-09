@@ -222,3 +222,20 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
     storage_account_uri = azurerm_storage_account.JWM-Storage1.primary_blob_endpoint
   }
 }
+
+resource "azurerm_virtual_machine_extension" "test" {
+  name                 = "<JWM-VM-2>"
+  location             = "East US"
+  resource_group_name  = "${azurerm_resource_group.JWM-Terraform.name}"
+  virtual_machine_name = "${azurerm_virtual_machine.JWM-VM-2.name}"
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  settings = <<SETTINGS
+    {
+    "fileUris": ["https://github.com/jwdm99/terraform.git/customdata.sh"],
+    "commandToExecute": "sh customdata.sh"
+    }
+SETTINGS
+}
