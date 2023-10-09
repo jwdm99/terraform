@@ -225,7 +225,7 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
 
 resource "azurerm_virtual_machine_extension" "JWM-VM-2" {
   name                 = "<test>"
-  virtual_machine_id   = azurerm_linux_virtual_machine.test.id
+  virtual_machine_id   = azurerm_linux_virtual_machine.JWM-VM-2.id
   location             = "East US"
   resource_group_name  = "${azurerm_resource_group.JWM-Terraform.name}"
   virtual_machine_name = "${azurerm_virtual_machine.JWM-VM-2.name}"
