@@ -229,7 +229,6 @@ resource "azurerm_virtual_machine_extension" "JWM-VM-2" {
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
   type_handler_version = "2.1"
-  autoUpgradeMinorVersion = true
   
   settings = <<SETTINGS
     {
