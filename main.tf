@@ -225,9 +225,9 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
 
 resource "azurerm_virtual_machine_extension" "test" {
   name                 = "hostname"
-  location             = "${azurerm_resource_group.test.location}"
-  resource_group_name  = "${azurerm_resource_group.test.name}"
-  virtual_machine_name = "${azurerm_virtual_machine.test.name}"
+  location             = azurerm_resource_group.test.location
+  resource_group_name  = azurerm_resource_group.test.name
+  virtual_machine_name = azurerm_virtual_machine.test.name
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
   type_handler_version = "2.0"
