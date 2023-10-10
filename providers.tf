@@ -6,7 +6,7 @@ terraform {
     }
     azapi = {
       source  = "azure/azapi"
-      version = "~>1.5"
+      version = "1.10"
     }
     random = {
       source  = "hashicorp/random"
@@ -17,4 +17,7 @@ terraform {
 
 provider "azurerm" {
   features {}
+}
+
+provider "azapi" {
 }
