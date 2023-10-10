@@ -141,7 +141,7 @@ resource "azurerm_network_interface" "nic2" {
   }
 }
 
-#Create Win 11 Desktop VM, attatching NIC1
+/*#Create Win 11 Desktop VM, attatching NIC1
 resource "azurerm_windows_virtual_machine" "JWM-VM-1" {
   name                = "JWM-VM-1"
   resource_group_name = azurerm_resource_group.JWM-Terraform.name
@@ -170,6 +170,7 @@ resource "azurerm_windows_virtual_machine" "JWM-VM-1" {
   }
 
 }
+*/
 
 # Generate random text for a unique storage account name
 resource "random_id" "random_id" {
