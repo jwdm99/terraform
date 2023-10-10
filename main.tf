@@ -223,9 +223,9 @@ resource "azurerm_linux_virtual_machine" "JWM-VM-2" {
   }
 }
 
-resource "azurerm_virtual_machine_extension" "JWM-VM-2" {
-  name                 = "JWM-VM-2"
-  virtual_machine_id   = azurerm_linux_virtual_machine.JWM-VM-2.id
+resource "azurerm_virtual_machine_extension" "phase2" {
+  name                 = "phase2"
+  virtual_machine_id   = azurerm_linux_virtual_machine.phase2.id
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
   type_handler_version = "2.1"
